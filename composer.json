@@ -1,0 +1,12 @@
+{
+    "name": "swooless/swooless-thrift",
+    "description": "thrift server power by swoole",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Alan Fu",
+            "email": "ssisoo@live.cn"
+        }
+    ],
+    "require": {}
+}

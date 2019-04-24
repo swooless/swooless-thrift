@@ -42,29 +42,18 @@ class BuildCommand extends Command
         if (is_file($file)) unlink($file);
         $folder = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(APP_ROOT));
         $items = [];
+
+
         foreach ($folder as $item) {
             //排除掉不需要的文件和目录
-            if (strpos($item->getPathName(), '/.git/')) {
+            if ($this->jumpDir($item->getPathName())) {
                 continue;
             }
-            if (strpos($item->getPathName(), '/.idea/')) {
-                continue;
-            }
-            if (strpos($item->getPathName(), '/tests/')) {
-                continue;
-            }
-            if (strpos($item->getPathName(), '/logs/')) {
-                continue;
-            }
-            if (strpos($item->getPathName(), '/bin/')) {
-                continue;
-            }
-
-            $output->writeln("add file: $item");
 
             $filename = pathinfo($item->getPathName(), PATHINFO_BASENAME);
             if (substr($filename, 0, 1) != '.' || $filename == '.env') {
                 $items[substr($item->getPathName(), strlen(APP_ROOT))] = $item->getPathName();
+                $output->writeln("add file: $item");
             }
         }
 
@@ -74,5 +63,18 @@ class BuildCommand extends Command
         $phar->delete('phpunit.xml');
         $phar->setDefaultStub("index.php");
         $phar->stopBuffering();
+    }
+
+    private function jumpDir($path): bool
+    {
+        $ignore = ['.git', '.idea', 'tests', 'logs', 'dist'];
+
+        foreach ($ignore as $item) {
+            if (strpos($path, '/' . $item . '/')) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -1,0 +1,30 @@
+# This file is a template, and might need editing before it works on your project.
+# Select image from https://hub.docker.com/_/php/
+image: maeteno/swoole:7.2
+
+# Select what we should cache between builds
+cache:
+  paths:
+  - vendor/
+
+before_script:
+# Install and run Composer
+- apt-get update -y
+- apt-get install -y curl git unzip
+- curl -sS https://getcomposer.org/installer | php
+- php composer.phar install
+
+# Bring in any services we need http://docs.gitlab.com/ee/ci/docker/using_docker_images.html#what-is-a-service
+# See http://docs.gitlab.com/ce/ci/services/README.html for examples.
+services:
+  - mongo:latest
+  - redis:latest
+
+# Run our tests
+# If Xdebug was installed you can generate a coverage report and see code coverage metrics.
+test:
+  script:
+  - cp env-example .env
+  - php index.php start -d
+  - sleep 3
+  - ./vendor/bin/phpunit

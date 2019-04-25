@@ -10,8 +10,8 @@ branches:
     - develop
 
 before_install:
-  - pecl instll swoole
-  - pecl instal redis
+  - pecl install swoole
+  - pecl install redis
   - echo "extension = swoole.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer install

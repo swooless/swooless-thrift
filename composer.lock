@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17d873a0e9b403bff07e4177d86f701e",
+    "content-hash": "943ca838eb3b09a09e99172d46a758d7",
     "packages": [
         {
             "name": "apache/thrift",
@@ -632,6 +632,41 @@
                 "thrift"
             ],
             "time": "2019-04-18T12:00:00+00:00"
+        },
+        {
+            "name": "swooless/thrift-protocol-demo",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/swooless/thrift-protocol-demo.git",
+                "reference": "fad105cd2fa37b534a36526dc657011ea7091805"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/swooless/thrift-protocol-demo/zipball/fad105cd2fa37b534a36526dc657011ea7091805",
+                "reference": "fad105cd2fa37b534a36526dc657011ea7091805",
+                "shasum": ""
+            },
+            "require": {
+                "apache/thrift": "^0.12.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Swooless\\Protocol\\Demo\\": "gen-php/Swooless/Protocol/Demo/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Alan.Fu",
+                    "email": "ssisoo@live.cn"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/swooless/thrift-protocol-demo/tree/1.0.0",
+                "issues": "https://github.com/swooless/thrift-protocol-demo/issues"
+            },
+            "time": "2019-04-24T08:49:32+00:00"
         },
         {
             "name": "swooless/thrift-server",

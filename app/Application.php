@@ -9,6 +9,7 @@ use Psr\Container\ContainerInterface;
 use swoole_server;
 use Swooless\Registry\RedisRegistry;
 use Swooless\Registry\ServerNode;
+
 use Swooless\Registry\SPI;
 use Swooless\ThriftServer\Server\SServer;
 use Swooless\ThriftServer\Server\SServerSocket;
@@ -77,7 +78,7 @@ class Application extends Container
                     $registry = app(SPI::class);
 
                     $node = new ServerNode();
-                    $node->setName(app('SERVER_NAME'));
+                    $node->setName((string)app('SERVER_NAME'));
                     $node->setHost($server->host);
                     $node->setPort(intval($server->port));
                     $registry->addProvider($node);
@@ -95,13 +96,13 @@ class Application extends Container
                     /** @var RedisRegistry $registry */
                     $registry = app(SPI::class);
                     $node = new ServerNode();
-                    $node->setName(app('SERVER_NAME'));
+                    $node->setName((string)app('SERVER_NAME'));
                     $node->setHost($server->host);
                     $node->setPort(intval($server->port));
                     $registry->removeProvider($node);
                 });
             } catch (Throwable $e) {
-                echo $e->getMessage() . PHP_EOL;
+                error_log($e->getMessage());
             }
         });
 

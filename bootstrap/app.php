@@ -4,6 +4,7 @@ use App\Console\BuildCommand;
 use App\Console\StartCommand;
 use App\Console\StopCommand;
 use Swooless\Config\Loader\FileLoader;
+use Symfony\Component\Console\Application;
 
 require __DIR__ . "/../vendor/autoload.php";
 
@@ -14,6 +15,7 @@ register_shutdown_function(function () {
     }
 });
 
+// chu
 if (!defined("APP_ROOT")) {
     $appRoot = substr(__DIR__, 0, strlen(__DIR__) - 10);
     define('APP_ROOT', $appRoot);
@@ -27,9 +29,8 @@ if (is_file(APP_ROOT . '/.env')) {
 }
 
 $builder = new DI\ContainerBuilder(App\Application::class);
-$builder->useAnnotations(false);
-$builder->useAutowiring(false);
-
+$builder->useAnnotations(true);
+$builder->useAutowiring(true);
 $builder->addDefinitions(APP_ROOT . '/config/di.php');
 
 try {
@@ -39,10 +40,15 @@ try {
     error_log('init error!');
 }
 
-$console = new Symfony\Component\Console\Application();
-$console->add(new StartCommand());
-$console->add(new StopCommand());
-$console->add(new BuildCommand());
+try {
+    $console = $app->get(Application::class);
+    $console->add($app->get(StartCommand::class));
+    $console->add($app->get(StopCommand::class));
+    $console->add($app->get(BuildCommand::class));
+} catch (Exception $e) {
+    error_log("console init fail!");
+    error_log($e->getMessage());
+}
 
 $app->set('console', $console);
 

@@ -13,6 +13,7 @@ use Thrift\Transport\TFramedTransport;
 use Thrift\Transport\TSocket;
 
 use function DI\create;
+use function DI\autowire;
 
 return [
     'SERVER_NAME' => function () {
@@ -22,9 +23,9 @@ return [
     'ServerProcessor' => create(ServerProcessor::class)
         ->constructor(create(DemoHandler::class)),
 
-    LoaderInterface::class => create(ZKLoader::class),
+    LoaderInterface::class => autowire(ZKLoader::class),
 
-    SPI::class => create(RedisRegistry::class),
+    SPI::class => autowire(RedisRegistry::class),
 
     ServerClient::class => function () {
         $timeout = 3;

@@ -2,7 +2,8 @@
 
 namespace App\Console;
 
-use App\Application;
+use App\ThriftServer;
+use DI\Annotation\Inject;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -10,6 +11,12 @@ use Throwable;
 
 class StopCommand extends Command
 {
+    /**
+     * @Inject()
+     * @var ThriftServer
+     */
+    private $server;
+
     protected function configure()
     {
         $this->setName('stop')
@@ -24,9 +31,7 @@ class StopCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         try {
-            $app = Application::getInstance();
-            $server = $app->server();
-            $server->stop();
+            $this->server->stop();
         } catch (Throwable $throwable) {
             $output->writeln("ERROR: {$throwable->getMessage()}");
         }

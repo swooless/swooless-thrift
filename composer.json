@@ -19,7 +19,8 @@
     "swooless/thrift-server": "^1.0",
     "swooless/registry": "^0.0.3",
     "swooless/config": "^1.0",
-    "swooless/thrift-protocol-demo": "^1.0"
+    "swooless/thrift-protocol-demo": "^1.0",
+    "doctrine/annotations": "^1.6"
   },
   "autoload": {
     "psr-4": {

@@ -18,7 +18,8 @@
     "monolog/monolog": "^1.24",
     "swooless/thrift-server": "^1.0",
     "swooless/registry": "^0.0.3",
-    "swooless/config": "^1.0"
+    "swooless/config": "^1.0",
+    "swooless/thrift-protocol-demo": "^1.0"
   },
   "autoload": {
     "psr-4": {
@@ -38,6 +39,10 @@
     "swoole/ide-helper": "^4.3"
   },
   "repositories": {
+    "protocol" : {
+      "type": "github",
+      "url": "git@github.com:swooless/thrift-protocol-demo.git"
+    },
     "packagist": {
       "type": "composer",
       "url": "https://packagist.laravel-china.org"

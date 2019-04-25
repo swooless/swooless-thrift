@@ -1,0 +1,20 @@
+language: php
+
+php:
+  - '7.1'
+  - '7.2'
+
+branches:
+  only:
+    - master
+    - develop
+
+before_install:
+  - pecl instll swoole
+  - echo "extension = swoole.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - composer install
+
+script:
+  - php index start -d
+  - sleep 5
+  - ./vendor/bin/phpunit

@@ -17,8 +17,9 @@ branches:
     - develop
 
 before_install:
+  - pecl channel-update pecl.php.net
   - printf 'yes\nno\nyes\nno\nno\nno\nno\n' | pecl install swoole
-  - pecl install redis
+  - printf 'no\nno\n' | pecl install redis
   - echo "extension = swoole.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo "APP_NAME=logger-server" > .env

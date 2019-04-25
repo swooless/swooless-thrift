@@ -3,6 +3,7 @@ language: php
 php:
   - '7.1'
   - '7.2'
+  - '7.3'
 
 addons:
   hosts:
@@ -17,20 +18,13 @@ branches:
     - develop
 
 before_install:
-  - ls -l
-  - php -m
-  - cat ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - pecl channel-update pecl.php.net
   - printf 'yes\nno\nyes\nno\nno\nno\nno\n' | pecl install swoole
-  - echo "extension=swoole.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - printf 'no\nno\n' | pecl install redis
-  - echo "extension=redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - export APP_NAME=logger-server
   - export REDIS_SERVER_HOST=redis
   - php -m
   - composer install
-  - ls -l
-  - cat ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 script:
   - php index.php start -d

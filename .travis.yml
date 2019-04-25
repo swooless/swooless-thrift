@@ -17,16 +17,20 @@ branches:
     - develop
 
 before_install:
+  - ls -l
+  - php -m
   - pecl channel-update pecl.php.net
   - printf 'yes\nno\nyes\nno\nno\nno\nno\n' | pecl install swoole
+  - echo "extension=swoole.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - printf 'no\nno\n' | pecl install redis
-  - echo "extension = swoole.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - echo "APP_NAME=logger-server" > .env
-  - echo "REDIS_SERVER_HOST=redis" >> .env
+  - echo "extension=redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - export APP_NAME=logger-server
+  - export REDIS_SERVER_HOST=redis
+  - php -m
   - composer install
+  - ls -l
 
 script:
-  - php index start -d
+  - php index.php start -d
   - sleep 5
   - ./vendor/bin/phpunit

@@ -42,11 +42,7 @@
   "repositories": {
     "protocol" : {
       "type": "github",
-      "url": "git@github.com:swooless/thrift-protocol-demo.git"
-    },
-    "packagist": {
-      "type": "composer",
-      "url": "https://packagist.laravel-china.org"
+      "url": "https://github.com/swooless/thrift-protocol-demo.git"
     }
   }
 }

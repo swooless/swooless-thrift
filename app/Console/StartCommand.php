@@ -2,7 +2,8 @@
 
 namespace App\Console;
 
-use App\Application;
+use App\ThriftServer;
+use DI\Annotation\Inject;
 use Swooless\Config\Loader\FileLoader;
 use Swooless\Config\Loader\LoaderInterface;
 use Symfony\Component\Console\Command\Command;
@@ -13,6 +14,18 @@ use Throwable;
 
 class StartCommand extends Command
 {
+    /**
+     * @Inject()
+     * @var FileLoader
+     */
+    private $loader;
+
+    /**
+     * @Inject()
+     * @var ThriftServer
+     */
+    private $server;
+
     protected function configure()
     {
         $this->setName('start')
@@ -31,13 +44,11 @@ class StartCommand extends Command
     {
         $start = time();
         try {
-            $app = Application::getInstance();
             $workspaceDir = $input->getOption('workspace');
 
             if (is_file($workspaceDir . '/.env')) {
-                $load = new FileLoader();
-                $load->init(['path' => [$workspaceDir . '/.env']]);
-                $load->loadToEnv();
+                $this->loader->init(['path' => [$workspaceDir . '/.env']]);
+                $this->loader->loadToEnv();
             }
 
             $daemon = $input->getOption('daemon');
@@ -60,9 +71,8 @@ class StartCommand extends Command
                 $load->loadToEnv();
             }
 
+            $this->server->run();
 
-            $server = $app->server();
-            $server->serve();
             $time = time() - $start;
             $output->writeln(PHP_EOL . "End of Server, time consuming: {$time}s");
 
